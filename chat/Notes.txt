@@ -1,2 +1,18 @@
-AllowNickChange
--- Defined in lib/class/AJAXChat.php
+TODO
+
+- Diable nickname changes for Registered users (guests already disabled)
+
+	AllowNickChange
+	-- Defined in lib/class/AJAXChat.php: Line 1297 
+	
+
+
+DONE Pile
+
+- Persist the font color by default
+	js/config.js: Lines 83-86 
+      		
+	// Defines if font colors persist without the need to assign them to each message:
+	persistFontColor: true, 
+	// The default font color, uses the page default font color if set to null:
+	fontColor: null,
