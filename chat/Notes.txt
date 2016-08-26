@@ -1,0 +1,2 @@
+AllowNickChange
+-- Defined in lib/class/AJAXChat.php

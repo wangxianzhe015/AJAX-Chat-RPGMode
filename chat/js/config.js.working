@@ -81,7 +81,7 @@ var ajaxChatConfig = {
 		dateFormat: '(%H:%i:%s)',
 		
 		// Defines if font colors persist without the need to assign them to each message:
-		persistFontColor: true,	
+		persistFontColor: false,	
 		// The default font color, uses the page default font color if set to null:
 		fontColor: null,
 		

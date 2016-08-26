@@ -24,6 +24,20 @@ $users[1]['userName'] = 'admin';
 $users[1]['password'] = 'admin';
 $users[1]['channels'] = array(0,1);
 
+// Superuser admin:
+$users[1] = array();
+$users[1]['userRole'] = AJAX_CHAT_ADMIN;
+$users[1]['userName'] = 'superadmin';
+$users[1]['password'] = 'superadmin';
+$users[1]['channels'] = array(0,1);
+
+// Poobah admin:
+$users[1] = array();
+$users[1]['userRole'] = AJAX_CHAT_ADMIN;
+$users[1]['userName'] = 'poobah_admin';
+$users[1]['password'] = 'poobah';
+$users[1]['channels'] = array(0,1);
+
 // Sample moderator user:
 $users[2] = array();
 $users[2]['userRole'] = AJAX_CHAT_MODERATOR;
@@ -31,9 +45,39 @@ $users[2]['userName'] = 'moderator';
 $users[2]['password'] = 'moderator';
 $users[2]['channels'] = array(0,1);
 
+// Superuser moderator user:
+$users[2] = array();
+$users[2]['userRole'] = AJAX_CHAT_MODERATOR;
+$users[2]['userName'] = 'supermoderator';
+$users[2]['password'] = 'supermoderator';
+$users[2]['channels'] = array(0,1);
+
+// Poobah moderator user:
+$users[2] = array();
+$users[2]['userRole'] = AJAX_CHAT_MODERATOR;
+$users[2]['userName'] = 'poobah_moderator';
+$users[2]['password'] = 'poobah';
+$users[2]['channels'] = array(0,1);
+
+// Superuser registered user:
+$users[3] = array();
+$users[3]['userRole'] = AJAX_CHAT_USER;
+$users[3]['userName'] = 'superuser';
+$users[3]['password'] = 'superuser';
+$users[3]['channels'] = array(0,1);
+
+// Poobah registered user:
+$users[3] = array();
+$users[3]['userRole'] = AJAX_CHAT_USER;
+$users[3]['userName'] = 'poobah_user';
+$users[3]['password'] = 'poobah';
+$users[3]['channels'] = array(0,1);
+
 // Sample registered user:
 $users[3] = array();
 $users[3]['userRole'] = AJAX_CHAT_USER;
-$users[3]['userName'] = 'user';
-$users[3]['password'] = 'user';
+$users[3]['userName'] = 'superuser';
+$users[3]['password'] = 'superuser';
 $users[3]['channels'] = array(0,1);
+
+

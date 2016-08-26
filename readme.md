@@ -1,3 +1,13 @@
+**AJAX Chat - RPG Fork**
+This is a fork of Frugs (very awesome) AJAX Chat client. 
+It includes tweaks and customizations so that it can be more readilly used by the Online RPG community.
+
+Currently it is being worked on by the technical team at Black City Games (www.blackcitygames.com).
+Perhaps someday the tweaks will be good enough to merge into the main branch! (or at least get an honorable mention on the Wiki ;))
+
+The original README has been kept intact as seen below
+
+
 AJAX Chat Standalone
 ====================
 
