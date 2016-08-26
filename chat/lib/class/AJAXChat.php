@@ -738,12 +738,12 @@ class AJAXChat {
 
 
 				// Listing online Users:
-				case '/who':	
+				case '/who':
 					$this->insertParsedMessageWho($textParts);
 					break;
-				
+
 				// Listing available channels:
-				case '/list':	
+				case '/list':
 					$this->insertParsedMessageList($textParts);
 					break;
 
@@ -751,25 +751,25 @@ class AJAXChat {
 				case '/whereis':
 					$this->insertParsedMessageWhereis($textParts);
 					break;
-				
+
 				// Listing information about a User:
 				case '/whois':
 					$this->insertParsedMessageWhois($textParts);
 					break;
-				
+
 				// Rolling dice:
-				case '/roll':				
+				case '/roll':
 					$this->insertParsedMessageRoll($textParts);
 					break;
 
 				// Switching userName:
-				case '/nick':				
+				case '/nick':
 					$this->insertParsedMessageNick($textParts);
 					break;
-			
+
 				// Custom or unknown command:
 				default:
-					if(!$this->parseCustomCommands($text, $textParts)) {				
+					if(!$this->parseCustomCommands($text, $textParts)) {
 						$this->insertChatBotMessage(
 							$this->getPrivateMessageID(),
 							'/error UnknownCommand '.$textParts[0]
@@ -1295,7 +1295,7 @@ class AJAXChat {
 			
 	function insertParsedMessageNick($textParts) {
 		if(!$this->getConfig('allowNickChange') ||
-			(!$this->getConfig('allowGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST)) {
+			(!$this->getConfig('allowdGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST) || ($this->getUserRole() == AJAX_CHAT_USER)) {
 			$this->insertChatBotMessage(
 				$this->getPrivateMessageID(),
 				'/error CommandNotAllowed '.$textParts[0]

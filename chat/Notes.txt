@@ -1,18 +1,36 @@
 TODO
 
-- Diable nickname changes for Registered users (guests already disabled)
 
-	AllowNickChange
-	-- Defined in lib/class/AJAXChat.php: Line 1297 
-	
+DONE
 
+#  Persist the font color by default
+	js/config.js: Lines 83-86
 
-DONE Pile
-
-- Persist the font color by default
-	js/config.js: Lines 83-86 
-      		
 	// Defines if font colors persist without the need to assign them to each message:
-	persistFontColor: true, 
+	persistFontColor: true,
 	// The default font color, uses the page default font color if set to null:
 	fontColor: null,
+
+# Move the UI element "Change username" so that only Admins/moderators can see it
+
+	Original Position: 1250
+	New Position: 1259
+
+	+ '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/nick \');">'
+	+ this.lang['userMenuNick']
+	+ '</a></li>';
+
+
+# Disabled /nick for AJAX_CHAT_USER by adding another || statement (as below)
+
+		lib/class/AJAXChat.php: Line 1297
+
+		(!$this->getConfig('allowdGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST) ||
+		  			($this->getUserRole() == AJAX_CHAT_USER)) {
+
+# Disable the ability for non-admin/non-moderator users to delete their messages
+		Configurable using lib/config.php (by default) 
+
+Other Notes
+- Interface (HTML) templates are located in
+	lib/templates
