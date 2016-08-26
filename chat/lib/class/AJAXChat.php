@@ -1295,7 +1295,7 @@ class AJAXChat {
 			
 	function insertParsedMessageNick($textParts) {
 		if(!$this->getConfig('allowNickChange') ||
-			(!$this->getConfig('allowdGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST) || ($this->getUserRole() == AJAX_CHAT_USER)) {
+			(!$this->getConfig('allowGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST) || ($this->getUserRole() == AJAX_CHAT_USER)) {
 			$this->insertChatBotMessage(
 				$this->getPrivateMessageID(),
 				'/error CommandNotAllowed '.$textParts[0]

@@ -1,5 +1,12 @@
 TODO
 
+-- User Icons...
+	 The variable "onlineList" is how users are pulled into the list
+
+	 userID = userNodes[i].getAttribute('userID');
+   userIcon = userNodes[i].getAttribute('userIcon');
+   userName = userNodes[i].firstChild ? userNodes[i].firstChild.nodeValue : '';
+   userRole = userNodes[i].getAttribute('userRole');
 
 DONE
 
@@ -29,8 +36,13 @@ DONE
 		  			($this->getUserRole() == AJAX_CHAT_USER)) {
 
 # Disable the ability for non-admin/non-moderator users to delete their messages
-		Configurable using lib/config.php (by default) 
+		Configurable using lib/config.php (by default)
 
-Other Notes
+
+
+OTHER NOTES
+
 - Interface (HTML) templates are located in
 	lib/templates
+
+- The list of available channels for a logged out user is dependant upon which channels are listed on the AJAX_CHAT_GUEST user (lib/data/channels.php)
