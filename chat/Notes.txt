@@ -7,6 +7,15 @@ TODO
    userIcon = userNodes[i].getAttribute('userIcon');
    userName = userNodes[i].firstChild ? userNodes[i].firstChild.nodeValue : '';
    userRole = userNodes[i].getAttribute('userRole');
+   
+-- User Profiles --
+Playing with the js/chat.js config by modifying the userMenu...
+	js/config.js
+	Line: 1252
+	
+        + '<li><a target="_blank" href="../../profiles/profile.php?user= ">'
+        + this.lang['userMenuProfile']
+        + '</a></li>';
 
 DONE
 
@@ -34,6 +43,8 @@ DONE
 
 		(!$this->getConfig('allowdGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST) ||
 		  			($this->getUserRole() == AJAX_CHAT_USER)) {
+		  			
+NOTE: This can ALSO be done by copying the ENTIRE function  into the CustomAjaxChat.php... a pain in the ass, but more in line with what Frug wants.
 
 # Disable the ability for non-admin/non-moderator users to delete their messages
 		Configurable using lib/config.php (by default)
