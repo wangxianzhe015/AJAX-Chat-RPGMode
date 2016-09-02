@@ -19,7 +19,7 @@ DONE
 	fontColor: null,
 
 # Move the UI element "Change username" so that only Admins/moderators can see it
-
+	js/chat.js
 	Original Position: 1250
 	New Position: 1259
 
