@@ -48,14 +48,14 @@ class CustomAJAXChat extends AJAXChat {
 			$this->_channels = array();
 
 			$customUsers = $this->getCustomUsers();
-
+			
 			// Get the channels, the user has access to:
 			if($this->getUserRole() == AJAX_CHAT_GUEST) {
 				$validChannels = $customUsers[0]['channels'];
 			} else {
 				$validChannels = $customUsers[$this->getUserID()]['channels'];
 			}
-
+			
 			// Add the valid channels to the channel list (the defaultChannelID is always valid):
 			foreach($this->getAllChannels() as $key=>$value) {
 				if ($value == $this->getConfig('defaultChannelID')) {
@@ -80,16 +80,16 @@ class CustomAJAXChat extends AJAXChat {
 		if($this->_allChannels === null) {
 			// Get all existing channels:
 			$customChannels = $this->getCustomChannels();
-
+			
 			$defaultChannelFound = false;
-
+			
 			foreach($customChannels as $name=>$id) {
 				$this->_allChannels[$this->trimChannelName($name)] = $id;
 				if($id == $this->getConfig('defaultChannelID')) {
 					$defaultChannelFound = true;
 				}
 			}
-
+			
 			if(!$defaultChannelFound) {
 				// Add the default channel as first array element to the channel list
 				// First remove it in case it appeard under a different ID
@@ -111,7 +111,7 @@ class CustomAJAXChat extends AJAXChat {
 		require(AJAX_CHAT_PATH.'lib/data/users.php');
 		return $users;
 	}
-
+	
 	function getCustomChannels() {
 		// List containing the custom channels:
 		$channels = null;
@@ -121,70 +121,4 @@ class CustomAJAXChat extends AJAXChat {
 		return array_flip($channels);
 	}
 
-	// Let's see if we can modify the /nick from here
-	// This is the COMPLETE function for changing nicknames...
-
-	function insertParsedMessageNick($textParts) {
-	  if(!$this->getConfig('allowNickChange') ||
-	    (!$this->getConfig('allowGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST)
-		|| ($this->getUserRole() == AJAX_CHAT_USER)) {
-	    $this->insertChatBotMessage(
-	      $this->getPrivateMessageID(),
-	      '/error CommandNotAllowed '.$textParts[0]
-	    );
-	  } else if(count($textParts) == 1) {
-	    $this->insertChatBotMessage(
-	      $this->getPrivateMessageID(),
-	      '/error MissingUserName'
-	    );
-	  } else {
-	    $newUserName = implode(' ', array_slice($textParts, 1));
-	    if($newUserName == $this->getLoginUserName()) {
-	      // Allow the user to regain the original login userName:
-	      $prefix = '';
-	      $suffix = '';
-	    } else if($this->getUserRole() == AJAX_CHAT_GUEST) {
-	      $prefix = $this->getConfig('guestUserPrefix');
-	      $suffix = $this->getConfig('guestUserSuffix');
-	    } else {
-	      $prefix = $this->getConfig('changedNickPrefix');
-	      $suffix = $this->getConfig('changedNickSuffix');
-	    }
-	    $maxLength =	$this->getConfig('userNameMaxLength')
-	            - $this->stringLength($prefix)
-	            - $this->stringLength($suffix);
-	    $newUserName = $this->trimString($newUserName, 'UTF-8', $maxLength, true);
-	    if(!$newUserName) {
-	      $this->insertChatBotMessage(
-	        $this->getPrivateMessageID(),
-	        '/error InvalidUserName'
-	      );
-	    } else {
-	      $newUserName = $prefix.$newUserName.$suffix;
-	      if($this->isUserNameInUse($newUserName)) {
-	        $this->insertChatBotMessage(
-	          $this->getPrivateMessageID(),
-	          '/error UserNameInUse'
-	        );
-	      } else {
-	        $oldUserName = $this->getUserName();
-	        $this->setUserName($newUserName);
-	        $this->updateOnlineList();
-	        // Add info message to update the client-side stored userName:
-	        $this->addInfoMessage($this->getUserName(), 'userName');
-	        $this->insertChatBotMessage(
-	          $this->getChannel(),
-	          '/nick '.$oldUserName.' '.$newUserName,
-	          null,
-	          2
-	        );
-	      }
-	    }
-	  }
-	}
-
-
-} // end of Class CustomAJAXChat extends AJAXChat
-
-
-?>
+} // End of Class CustomAJAXChat extends AJAXChat

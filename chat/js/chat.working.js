@@ -1174,12 +1174,6 @@ var ajaxChat = {
 		this.dom['chatList'].scrollTop = this.dom['chatList'].scrollHeight;
 	},
 
-	// Function for User Profile pop-ups
-	userProfilePopup: function(userName, userID) {
-    		window.open("../../profiles/profile2.php?user=" + userName, "user_profile", "width=870,height=500");
-		//alert(userName);
- 	},
-
 	getUserNodeStringItems: function(encodedUserName, userID, isInline) {
 		var menu;
 		if(encodedUserName !== this.encodedUserName) {
@@ -1254,16 +1248,8 @@ var ajaxChat = {
 					+ '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/roll \');">'
 					+ this.lang['userMenuRoll']
 					+ '</a></li>'
-					+ '<li><a href="javascript:ajaxChat.userProfilePopup();">'
+					+ '<li><a target="_blank" href="../../profiles/profile.php?user= ">'
 					+ this.lang['userMenuProfile']
-					+ '</a></li>'
-					// This 'HTML' Solution works but not as a pop-up. 
-					//  + '<li><a target="_blank" href="../../profiles/profile.php?user=' 
-					//  + userID 
-					//  + '">View Profile</a></li>' // Single Language version
-					
-					+ '<li><a target="_blank" href="http://shadows.blackcitygames.com/player-tools/diceroller.php">'
-					+ this.lang['userMenuDiceRoller']
 					+ '</a></li>';
 
 			if(this.userRole === '1' || this.userRole === '2' || this.userRole === '3') {
