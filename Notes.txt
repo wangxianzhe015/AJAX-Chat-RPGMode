@@ -9,13 +9,37 @@ TODO
    userRole = userNodes[i].getAttribute('userRole');
    
 -- User Profiles --
-Playing with the js/chat.js config by modifying the userMenu...
-	js/config.js
-	Line: 1252
-	
-        + '<li><a target="_blank" href="../../profiles/profile.php?user= ">'
-        + this.lang['userMenuProfile']
-        + '</a></li>';
+To get pop-ups to work add the following blocks of code to js/chat.js:
+
+File:   js/chat.js  |  Line:  1177
+
+   // Test function for User Profile pop-ups
+     userProfilePopup: function(userID) {
+             window.open("../../profiles/profile.php?user=" + userID, "user_profile", "width=200,height=100");
+     },
+
+File:   js/chat.js  |  Line:  1256
+
+    // Single Language Version
+          + '<li><a href="javascript:ajaxChat.userProfilePopup();">
+          + View Profile</a></li>'
+OR
+
+    // Multi-language version
+          + '<li><a href="javascript:ajaxChat.userProfilePopup();">'
+          + this.lang['userMenuProfile']
+          + '</a></li>'
+
+    // For this you will also need to append: userMenuProfile: 'User Profile',
+    // To somewhere in the js/lang/[lang_of_choice].js list
+
+
+NOTES:
+- The line numbers posted here are not hard requirements, but more like suggestions
+- The URL "../../profiles/profile.php?user=" should be modified to match your installation
+Yet Untested Example (phpBB):
+window.open("..relative/path/to/forum/memberlist.php?mode=viewprofile&u=" + userID, "user_profile", "width=200,height=100");
+- I have included both Single and Multi-language versions for the menu list item, pick one.
 
 DONE
 
