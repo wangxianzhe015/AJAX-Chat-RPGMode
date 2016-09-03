@@ -74,6 +74,42 @@ NOTE: This can ALSO be done by copying the ENTIRE function  into the CustomAjaxC
 		Configurable using lib/config.php (by default)
 
 
+# Added a giant list of colors to js/config.js : colorCodes [
+
+# Added custom IRC commands
+// This is where we can start adding custom commands
+function parseCustomCommands($text, $textParts) {
+    switch($textParts[0]) {
+        // Away from keyboard message:
+        case '/away':
+                $this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to Away');
+                $this->setUserName($this->getLoginUserName().'[Away]');
+                $this->updateOnlineList();
+                $this->addInfoMessage($this->getUserName(), 'userName');
+                return true;
+        case '/online':
+        case '/back':
+                $this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to Online');
+                $this->setUserName($this->getLoginUserName());
+                $this->updateOnlineList();
+                $this->addInfoMessage($this->getUserName(), 'userName');
+                return true;
+        // Trout slap command
+        case '/trout':
+        case '/slap':
+                $this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' slaps '.implode(' ', array_slice($textParts, 1)).' with a wet trout');
+                return true;
+        // Custom Status
+        case '/status':
+                $this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to '.implode(' ', array_slice($textParts, 1)));
+                $this->setUserName($this->getLoginUserName().'['.implode(' ', array_slice($textParts, 1)).']');
+                $this->updateOnlineList();
+                $this->addInfoMessage($this->getUserName(), 'userName');
+                return true;
+
+        } // End of switch
+    } // End of parseCustomCommands
+
 
 OTHER NOTES
 

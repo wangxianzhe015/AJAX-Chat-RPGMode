@@ -1183,7 +1183,7 @@ var ajaxChat = {
 	getUserNodeStringItems: function(encodedUserName, userID, isInline) {
 		var menu;
 		if(encodedUserName !== this.encodedUserName) {
-			menu 	= '<li><a href="javascript:ajaxChat.winsertMessageWrapper(\'/msg '
+			menu 	= '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/msg '
 					+ encodedUserName
 					+ ' \');">'
 					+ this.lang['userMenuSendPrivateMessage']
@@ -1251,9 +1251,9 @@ var ajaxChat = {
 					+ '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/action \');">'
 					+ this.lang['userMenuAction']
 					+ '</a></li>'
-					+ '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/roll \');">'
-					+ this.lang['userMenuRoll']
-					+ '</a></li>'
+				//	+ '<li><a href="javascript:ajaxChat.insertMessageWrapper(\'/roll \');">'
+				//	+ this.lang['userMenuRoll']
+				//	+ '</a></li>'
 					+ '<li><a href="javascript:ajaxChat.userProfilePopup();">'
 					+ this.lang['userMenuProfile']
 					+ '</a></li>'

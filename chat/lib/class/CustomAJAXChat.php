@@ -39,7 +39,7 @@ class CustomAJAXChat extends AJAXChat {
 			// Guest users:
 			return $this->getGuestUser();
 		}
-	}
+	} // End getValidLoginUserData
 
 	// Store the channels the current user has access to
 	// Make sure channel names don't contain any whitespace
@@ -48,14 +48,14 @@ class CustomAJAXChat extends AJAXChat {
 			$this->_channels = array();
 
 			$customUsers = $this->getCustomUsers();
-
+			
 			// Get the channels, the user has access to:
 			if($this->getUserRole() == AJAX_CHAT_GUEST) {
 				$validChannels = $customUsers[0]['channels'];
 			} else {
 				$validChannels = $customUsers[$this->getUserID()]['channels'];
 			}
-
+			
 			// Add the valid channels to the channel list (the defaultChannelID is always valid):
 			foreach($this->getAllChannels() as $key=>$value) {
 				if ($value == $this->getConfig('defaultChannelID')) {
@@ -72,7 +72,7 @@ class CustomAJAXChat extends AJAXChat {
 			}
 		}
 		return $this->_channels;
-	}
+	} // End &getChannels
 
 	// Store all existing channels
 	// Make sure channel names don't contain any whitespace
@@ -80,16 +80,16 @@ class CustomAJAXChat extends AJAXChat {
 		if($this->_allChannels === null) {
 			// Get all existing channels:
 			$customChannels = $this->getCustomChannels();
-
+			
 			$defaultChannelFound = false;
-
+			
 			foreach($customChannels as $name=>$id) {
 				$this->_allChannels[$this->trimChannelName($name)] = $id;
 				if($id == $this->getConfig('defaultChannelID')) {
 					$defaultChannelFound = true;
 				}
 			}
-
+			
 			if(!$defaultChannelFound) {
 				// Add the default channel as first array element to the channel list
 				// First remove it in case it appeard under a different ID
@@ -103,15 +103,15 @@ class CustomAJAXChat extends AJAXChat {
 			}
 		}
 		return $this->_allChannels;
-	}
+	} // End &getAllChannels
 
 	function &getCustomUsers() {
 		// List containing the registered chat users:
 		$users = null;
 		require(AJAX_CHAT_PATH.'lib/data/users.php');
 		return $users;
-	}
-
+	} // End &getCustomUsers
+	
 	function getCustomChannels() {
 		// List containing the custom channels:
 		$channels = null;
@@ -119,72 +119,41 @@ class CustomAJAXChat extends AJAXChat {
 		// Channel array structure should be:
 		// ChannelName => ChannelID
 		return array_flip($channels);
-	}
+	} //End getCustomChannels
 
-	// Let's see if we can modify the /nick from here
-	// This is the COMPLETE function for changing nicknames...
-
-	function insertParsedMessageNick($textParts) {
-	  if(!$this->getConfig('allowNickChange') ||
-	    (!$this->getConfig('allowGuestUserName') && $this->getUserRole() == AJAX_CHAT_GUEST)
-		|| ($this->getUserRole() == AJAX_CHAT_USER)) {
-	    $this->insertChatBotMessage(
-	      $this->getPrivateMessageID(),
-	      '/error CommandNotAllowed '.$textParts[0]
-	    );
-	  } else if(count($textParts) == 1) {
-	    $this->insertChatBotMessage(
-	      $this->getPrivateMessageID(),
-	      '/error MissingUserName'
-	    );
-	  } else {
-	    $newUserName = implode(' ', array_slice($textParts, 1));
-	    if($newUserName == $this->getLoginUserName()) {
-	      // Allow the user to regain the original login userName:
-	      $prefix = '';
-	      $suffix = '';
-	    } else if($this->getUserRole() == AJAX_CHAT_GUEST) {
-	      $prefix = $this->getConfig('guestUserPrefix');
-	      $suffix = $this->getConfig('guestUserSuffix');
-	    } else {
-	      $prefix = $this->getConfig('changedNickPrefix');
-	      $suffix = $this->getConfig('changedNickSuffix');
-	    }
-	    $maxLength =	$this->getConfig('userNameMaxLength')
-	            - $this->stringLength($prefix)
-	            - $this->stringLength($suffix);
-	    $newUserName = $this->trimString($newUserName, 'UTF-8', $maxLength, true);
-	    if(!$newUserName) {
-	      $this->insertChatBotMessage(
-	        $this->getPrivateMessageID(),
-	        '/error InvalidUserName'
-	      );
-	    } else {
-	      $newUserName = $prefix.$newUserName.$suffix;
-	      if($this->isUserNameInUse($newUserName)) {
-	        $this->insertChatBotMessage(
-	          $this->getPrivateMessageID(),
-	          '/error UserNameInUse'
-	        );
-	      } else {
-	        $oldUserName = $this->getUserName();
-	        $this->setUserName($newUserName);
-	        $this->updateOnlineList();
-	        // Add info message to update the client-side stored userName:
-	        $this->addInfoMessage($this->getUserName(), 'userName');
-	        $this->insertChatBotMessage(
-	          $this->getChannel(),
-	          '/nick '.$oldUserName.' '.$newUserName,
-	          null,
-	          2
-	        );
-	      }
-	    }
-	  }
-	}
+    // This is where we can start adding custom commands
+    function parseCustomCommands($text, $textParts) {
+    	switch($textParts[0]) {
+    	// Away from keyboard message:
+    	case '/away':
+    		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to Away');
+    		$this->setUserName($this->getLoginUserName().'[Away]');
+    		$this->updateOnlineList();
+    		$this->addInfoMessage($this->getUserName(), 'userName');
+    		return true;
+    	case '/online':
+    	case '/back':
+    		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to Online');
+    		$this->setUserName($this->getLoginUserName());
+    		$this->updateOnlineList();
+    		$this->addInfoMessage($this->getUserName(), 'userName');
+    		return true;
+    	case '/trout':
+    	case '/slap':
+		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' slaps '.implode(' ', array_slice($textParts, 1)).' with a wet trout');
+    		return true;
+    	case '/status':
+    		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to '.implode(' ', array_slice($textParts, 1)));
+    		$this->setUserName($this->getLoginUserName().'['.implode(' ', array_slice($textParts, 1)).']');
+    		$this->updateOnlineList();
+    		$this->addInfoMessage($this->getUserName(), 'userName');
+    		return true;
 
 
-} // end of Class CustomAJAXChat extends AJAXChat
+    	} // End of switch
+    } // End of parseCustomCommands
 
 
-?>
+
+  // DO NOT PUT ANYTHING BEYOND THIS POINT!
+} // End CustomAJAXChat extends AJAXChat {
