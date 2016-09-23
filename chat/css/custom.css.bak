@@ -15,15 +15,3 @@
 	top: 10px;
 }
 */
-#content #chatList .rowOdd {
-        background-color:transparent;
-}
-#content #chatList .rowEven {
-        background-color:transparent;
-}
-#content #chatList .rowOdd.private {
-        background-color:transparent;
-}
-#content #chatList .rowEven.private {
-        background-color:transparent;
-}

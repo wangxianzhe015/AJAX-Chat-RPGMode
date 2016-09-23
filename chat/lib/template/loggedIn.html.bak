@@ -362,11 +362,6 @@
 						<dd><input type="checkbox" id="persistFontColorSetting" onclick="ajaxChat.setPersistFontColor(this.checked);"/></dd>
 					</dl>
 					<dl>
-						<dt><label for="invisibilitySetting">[LANG]settingsInvisibility[/LANG]</label></dt>
-                        <dd><input type="checkbox" id="invisibilitySetting" onclick="ajaxChat.setInvisibility;"/></dd>
-                	                
-					</dl>
-					<dl>
 						<dt><label for="audioBackendSetting">[LANG]settingsAudioSupport[/LANG]</label></dt>
 						<dd>
 							<select id="audioBackendSetting" onchange="ajaxChat.setAudioBackend(this.options[this.selectedIndex].value);">

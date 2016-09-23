@@ -138,12 +138,10 @@ class CustomAJAXChat extends AJAXChat {
     		$this->updateOnlineList();
     		$this->addInfoMessage($this->getUserName(), 'userName');
     		return true;
-	// Trout slap command
     	case '/trout':
     	case '/slap':
 		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' slaps '.implode(' ', array_slice($textParts, 1)).' with a wet trout');
     		return true;
-	// Custom Status
     	case '/status':
     		$this->insertChatBotMessage($this->getChannel(), $this->getLoginUserName().' has set their status to '.implode(' ', array_slice($textParts, 1)));
     		$this->setUserName($this->getLoginUserName().'['.implode(' ', array_slice($textParts, 1)).']');
@@ -151,8 +149,11 @@ class CustomAJAXChat extends AJAXChat {
     		$this->addInfoMessage($this->getUserName(), 'userName');
     		return true;
 
+
     	} // End of switch
     } // End of parseCustomCommands
+
+
+
   // DO NOT PUT ANYTHING BEYOND THIS POINT!
 } // End CustomAJAXChat extends AJAXChat {
-?>
